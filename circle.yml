@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   override:
-    - docker build -t bigboat/monitor .
+    - docker build -t ictu/bigboat-monitor .
 
 test:
   override:
@@ -17,18 +17,18 @@ deployment:
   tags:
     tag: /^[0-9]+\.[0-9]+\.[0-9]+$/
     commands:
-      - docker tag bigboat/monitor bigboat/monitor:${CIRCLE_TAG}
-      - MAJOR_VERSION=${CIRCLE_TAG/.*}; docker tag bigboat/monitor:${CIRCLE_TAG} bigboat/monitor:${MAJOR_VERSION}
-      - MINOR_VERSION=${CIRCLE_TAG%.*}; docker tag bigboat/monitor:${CIRCLE_TAG} bigboat/monitor:${MINOR_VERSION}
+      - docker tag ictu/bigboat-monitor ictu/bigboat-monitor:${CIRCLE_TAG}
+      - MAJOR_VERSION=${CIRCLE_TAG/.*}; docker tag ictu/bigboat-monitor:${CIRCLE_TAG} ictu/bigboat-monitor:${MAJOR_VERSION}
+      - MINOR_VERSION=${CIRCLE_TAG%.*}; docker tag ictu/bigboat-monitor:${CIRCLE_TAG} ictu/bigboat-monitor:${MINOR_VERSION}
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push bigboat/monitor
-      - docker push bigboat/monitor:${CIRCLE_TAG}
-      - docker push bigboat/monitor:${MINOR_VERSION}
-      - docker push bigboat/monitor:${MAJOR_VERSION}
+      - docker push ictu/bigboat-monitor
+      - docker push ictu/bigboat-monitor:${CIRCLE_TAG}
+      - docker push ictu/bigboat-monitor:${MINOR_VERSION}
+      - docker push ictu/bigboat-monitor:${MAJOR_VERSION}
 
   features:
     branch: /^feature.*$/
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker tag bigboat/monitor:latest bigboat/monitor:${CIRCLE_BRANCH}
-      - docker push bigboat/monitor:${CIRCLE_BRANCH}
+      - docker tag ictu/bigboat-monitor:latest ictu/bigboat-monitor:${CIRCLE_BRANCH}
+      - docker push ictu/bigboat-monitor:${CIRCLE_BRANCH}
